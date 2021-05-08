@@ -1,6 +1,6 @@
 package commands.mariadb.projects;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -12,7 +12,7 @@ public class comRemoveUserFromProject implements commands.Command{
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("546580860456009760"))) {
-                Main.ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
+                ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
                 return true;
             }
             return false;
@@ -34,16 +34,16 @@ public class comRemoveUserFromProject implements commands.Command{
                     username = event.getJDA().retrieveUserById(userid).complete().getName();
 
                     if (!userid.equals(event.getMessage().getAuthor().getId()) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                        Main.ErrorHandler.CustomEmbedError("Invalid user. Only Centurions and Quaestors can submit project applications for other people.", event);
+                        ErrorHandler.CustomEmbedError("Invalid user. Only Centurions and Quaestors can submit project applications for other people.", event);
                         return;
                     }
                 } else {
-                    Main.ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
+                    ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
                     return;
                 }
             }
             catch (Exception e) {
-                Main.ErrorHandler.CustomEmbedError("Invalid user.", event);
+                ErrorHandler.CustomEmbedError("Invalid user.", event);
                 return;
             }
 
@@ -65,7 +65,7 @@ public class comRemoveUserFromProject implements commands.Command{
             }
         }
         catch (Exception e) {
-            Main.ErrorHandler.CustomEmbedError("Wrong syntax.", event);
+            ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }
 

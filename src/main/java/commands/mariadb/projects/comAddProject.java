@@ -1,6 +1,6 @@
 package commands.mariadb.projects;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
@@ -9,7 +9,7 @@ public class comAddProject implements commands.Command{
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                Main.ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
+                ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
                 return true;
             }
             return false;
@@ -29,19 +29,19 @@ public class comAddProject implements commands.Command{
         if (Args.length > 0) {
             projectid = Args[0];
         } else {
-            Main.ErrorHandler.CustomEmbedError("Invalid project ID.", event);
+            ErrorHandler.CustomEmbedError("Invalid project ID.", event);
             return;
         }
         if (Args.length > 1) {
             projectname = Args[1];
         } else {
-            Main.ErrorHandler.CustomEmbedError("Invalid project name.", event);
+            ErrorHandler.CustomEmbedError("Invalid project name.", event);
             return;
         }
         if (Args.length > 2) {
             projectdesc = Args[2];
         } else {
-            Main.ErrorHandler.CustomEmbedError("Invalid project description.", event);
+            ErrorHandler.CustomEmbedError("Invalid project description.", event);
             return;
         }
         projectowner = event.getMessage().getAuthor().getName();

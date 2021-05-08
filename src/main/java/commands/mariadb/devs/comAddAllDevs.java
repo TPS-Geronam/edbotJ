@@ -1,5 +1,6 @@
 package commands.mariadb.devs;
 
+import core.ErrorHandler;
 import core.Main;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -24,7 +25,7 @@ public class comAddAllDevs implements commands.Command{
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                Main.ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
+                ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
                 return true;
             }
             return false;
@@ -42,7 +43,7 @@ public class comAddAllDevs implements commands.Command{
                 ret = Boolean.parseBoolean(Args[0]);
             }
         } catch (Exception e) {
-            Main.ErrorHandler.CustomEmbedError("`hide` is not boolean. Use either `true` or `false`.", event);
+            ErrorHandler.CustomEmbedError("`hide` is not boolean. Use either `true` or `false`.", event);
             return;
         }
         DevManager.ClearDevsDB(event);
@@ -76,7 +77,7 @@ public class comAddAllDevs implements commands.Command{
             }
             Main.DevManager.AddDevToDB(event, m.getUser().getId(), m.getUser().getName(), vic, ret);
         }*/
-        Main.ErrorHandler.CustomEmbed(":white_check_mark: Task completed.", new Color(3, 193, 19), event);
+        ErrorHandler.CustomEmbed(":white_check_mark: Task completed.", new Color(3, 193, 19), event);
     }
 
     public void work(MessageReceivedEvent event, Member m, boolean ret) {

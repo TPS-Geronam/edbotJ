@@ -1,6 +1,6 @@
 package commands.mariadb.devs;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
@@ -9,25 +9,20 @@ import java.awt.*;
 public class comProcuratores implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId());
     }
 
     @Override
     public void action(String[] Args, MessageReceivedEvent event) {
-        String procs = "";
+        StringBuilder procs = new StringBuilder();
         for (String key : Secrets.procuratores.keySet()) {
-            if (procs.equals("")) {
-                procs = "Procuratores: `" + key + "`";
+            if (procs.toString().equals("")) {
+                procs = new StringBuilder("Procuratores: `" + key + "`");
             } else {
-                procs = procs + ", `" + key + "`";
+                procs.append(", `").append(key).append("`");
             }
         }
-        Main.ErrorHandler.CustomEmbed(procs, new Color(3, 193, 19), event);
+        ErrorHandler.CustomEmbed(procs.toString(), new Color(3, 193, 19), event);
     }
 
     @Override

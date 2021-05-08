@@ -25,13 +25,10 @@ import util.Secrets;
 
 public class Main {
     public static JDABuilder builder;
-    public static ErrorHandler ErrorHandler;
 
     static Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] arguments) throws Exception {
-        ErrorHandler = new ErrorHandler();
-
         builder = JDABuilder.createDefault(Secrets.getTokenM());
         builder.setToken(Secrets.getTokenM());
         builder.setStatus(OnlineStatus.ONLINE);

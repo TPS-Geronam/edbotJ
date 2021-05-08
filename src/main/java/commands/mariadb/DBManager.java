@@ -1,6 +1,6 @@
 package commands.mariadb;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
@@ -24,11 +24,11 @@ public class DBManager {
 
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.contains("successfully")) {
-                    Main.ErrorHandler.CustomEmbed(inputLine, new Color(3, 193, 19), event);
+                    ErrorHandler.CustomEmbed(inputLine, new Color(3, 193, 19), event);
                     in.close();
                     return true;
                 } else {
-                    Main.ErrorHandler.CustomEmbedError(inputLine, event);
+                    ErrorHandler.CustomEmbedError(inputLine, event);
                     in.close();
                     return false;
                 }
@@ -36,7 +36,7 @@ public class DBManager {
         }
         catch (Exception e) {
             if (Secrets.debug) {
-                Main.ErrorHandler.CustomEmbedError(e.getMessage(), event);
+                ErrorHandler.CustomEmbedError(e.getMessage(), event);
             }
         }
         return false;

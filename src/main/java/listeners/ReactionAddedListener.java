@@ -1,8 +1,8 @@
 package listeners;
 
+import commands.mariadb.projects.PrjManager;
 import commands.mariadb.projects.ProjectAddRequest;
 import commands.mariadb.projects.ProjectRemoveRequest;
-import core.Main;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -28,7 +28,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                         EmbedBuilder eb = new EmbedBuilder();
                         eb.setFooter("edbotJ", event.getJDA().getSelfUser().getAvatarUrl());
                         if (react.equals("✅")) {
-                            if (Main.PrjManager.AddUserToProject(req.GetEvent(), req.GetProjectID(), req.GetUserID(), req.GetUsername(), req.GetComment())) {
+                            if (PrjManager.AddUserToProject(req.GetEvent(), req.GetProjectID(), req.GetUserID(), req.GetUsername(), req.GetComment())) {
                                 eb.setColor(new Color(3, 193, 19));
                                 eb.setDescription("Hey, " + req.GetEvent().getAuthor().getName() + "! Your project application has been reviewed and accepted by a Centurion.");
                             } else {
@@ -36,9 +36,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                                 eb.setDescription("Hey, " + req.GetEvent().getAuthor().getName() + "! You seem to already be assigned to another project. You can only be a part of one project at a time.\nIf you want to request to be removed from your current project, use the `" + Secrets.prefix + "prjremove` command.");
                             }
 
-                            req.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> {
-                                channel.sendMessage(eb.build()).queue();
-                            });
+                            req.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
 
                             eb.setColor(new Color(193, 114, 0));
                             eb.setDescription("Project application for " + req.GetUsername() + " accepted by " + event.getUser().getName() + ".");
@@ -67,7 +65,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                         EmbedBuilder eb = new EmbedBuilder();
                         eb.setFooter("edbotJ", event.getJDA().getSelfUser().getAvatarUrl());
                         if (react.equals("✅")) {
-                            if (Main.PrjManager.DeleteUserFromProject(reqRemove.GetEvent(), reqRemove.GetUserID())) {
+                            if (PrjManager.DeleteUserFromProject(reqRemove.GetEvent(), reqRemove.GetUserID())) {
                                 eb.setColor(new Color(3, 193, 19));
                                 eb.setDescription("Hey, " + reqRemove.GetEvent().getAuthor().getName() + "! Your project dismissal application has been reviewed and accepted by a Centurion.");
                             } else {

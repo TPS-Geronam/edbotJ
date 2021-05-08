@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandParser {
@@ -12,14 +13,11 @@ public class CommandParser {
         String beheaded = raw.replaceFirst(Secrets.prefix, "");
         String[] splitBeheaded;
         if (raw.contains("\"") && raw.contains(" ")) {
-            List<String> list = new ArrayList<String>();
 
             String[] splitTemp = beheaded.split("\"");
             String[] splitTempZero = splitTemp[0].split(" ");
 
-            for (String s: splitTempZero) {
-                list.add(s);
-            }
+            List<String> list = new ArrayList<>(Arrays.asList(splitTempZero));
             for (String sd: splitTemp) {
                 if (!sd.equals(" ") && !sd.equals(splitTemp[0])) {
                     list.add(sd);
@@ -34,10 +32,7 @@ public class CommandParser {
             splitBeheaded = beheaded.split(" ");
         }
         String invoke = splitBeheaded[0];
-        ArrayList<String> split = new ArrayList<String>();
-        for (String s : splitBeheaded) {
-            split.add(s);
-        }
+        ArrayList<String> split = new ArrayList<>(Arrays.asList(splitBeheaded));
         String[] Args = new String[split.size() - 1];
         split.subList(1, split.size()).toArray(Args);
 

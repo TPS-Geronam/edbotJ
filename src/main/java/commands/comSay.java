@@ -15,7 +15,7 @@ public class comSay implements Command{
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                Main.ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
+                ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
                 return true;
             }
             return false;
@@ -39,7 +39,7 @@ public class comSay implements Command{
             c.sendMessage(StringUtils.join(Arrays.copyOfRange(Args, 1, Args.length), " ")).queue();
         }
         catch (Exception e) {
-            Main.ErrorHandler.CustomEmbedError("Predefined channel not valid.", event);
+            ErrorHandler.CustomEmbedError("Predefined channel not valid.", event);
         }
     }
 

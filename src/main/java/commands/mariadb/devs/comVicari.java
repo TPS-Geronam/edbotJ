@@ -1,6 +1,6 @@
 package commands.mariadb.devs;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
@@ -9,25 +9,20 @@ import java.awt.*;
 public class comVicari implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId());
     }
 
     @Override
     public void action(String[] Args, MessageReceivedEvent event) {
-        String vics = "";
+        StringBuilder vics = new StringBuilder();
         for (String key : Secrets.vicari.keySet()) {
-            if (vics.equals("")) {
-                vics = "Vicari: `" + key + "`";
+            if (vics.toString().equals("")) {
+                vics = new StringBuilder("Vicari: `" + key + "`");
             } else {
-                vics = vics + ", `" + key + "`";
+                vics.append(", `").append(key).append("`");
             }
         }
-        Main.ErrorHandler.CustomEmbed(vics, new Color(3, 193, 19), event);
+        ErrorHandler.CustomEmbed(vics.toString(), new Color(3, 193, 19), event);
     }
 
     @Override

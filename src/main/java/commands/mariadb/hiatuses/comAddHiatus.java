@@ -1,6 +1,6 @@
 package commands.mariadb.hiatuses;
 
-import core.Main;
+import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -12,7 +12,7 @@ public class comAddHiatus implements commands.Command{
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("546580860456009760"))) {
-                Main.ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
+                ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
                 return true;
             }
             return false;
@@ -36,34 +36,34 @@ public class comAddHiatus implements commands.Command{
                     userid = Args[0].replace("<", "").replace(">", "").replace("@", "").replace("!", "");
                     username = event.getJDA().retrieveUserById(userid).complete().getName();
                 } else {
-                    Main.ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
+                    ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
                     return;
                 }
             }
             catch (Exception e) {
-                Main.ErrorHandler.CustomEmbedError("Invalid user.", event);
+                ErrorHandler.CustomEmbedError("Invalid user.", event);
                 return;
             }
             if (Args.length > 1 && Args[1].matches("\\d{4}-\\d{2}-\\d{2}")) {
                 start = Args[1];
             } else {
-                Main.ErrorHandler.CustomEmbedError("Invalid start date. Use `YYYY-MM-DD`.", event);
+                ErrorHandler.CustomEmbedError("Invalid start date. Use `YYYY-MM-DD`.", event);
                 return;
             }
             if (Args.length > 2 && Args[2].matches("\\d{4}-\\d{2}-\\d{2}")) {
                 end = Args[2];
             } else {
-                Main.ErrorHandler.CustomEmbedError("Invalid end date. Use `YYYY-MM-DD`.", event);
+                ErrorHandler.CustomEmbedError("Invalid end date. Use `YYYY-MM-DD`.", event);
                 return;
             }
             if (start.equals(end)) {
-                Main.ErrorHandler.CustomEmbedError("`start` and `end` cannot be the same.", event);
+                ErrorHandler.CustomEmbedError("`start` and `end` cannot be the same.", event);
                 return;
             }
             if (Args.length > 3) {
                 reason = Args[3];
             } else {
-                Main.ErrorHandler.CustomEmbedError("Invalid reason.", event);
+                ErrorHandler.CustomEmbedError("Invalid reason.", event);
                 return;
             }
             if (Args.length > 4) {
@@ -95,7 +95,7 @@ public class comAddHiatus implements commands.Command{
             //}
         }
         catch (Exception e) {
-            Main.ErrorHandler.CustomEmbedError("Wrong syntax.", event);
+            ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }
 
