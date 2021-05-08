@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+/out/
+/target/
+/prop.xml
+/.idea/
+/src/main/resources/
+/src/main/java/META-INF/
