@@ -2,10 +2,13 @@ package commands.mariadb.hiatuses;
 
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
 import java.awt.*;
+import java.util.List;
 
 public class comRemoveHiatus implements commands.Command{
     @Override
@@ -52,6 +55,14 @@ public class comRemoveHiatus implements commands.Command{
                 }
             } else {
                 HiatusManager.RemoveHiatusFromDB(event, userid);
+            }
+
+            Member m = event.getGuild().retrieveMemberById(userid).complete();
+            List<Role> mr = m.getRoles();
+            Role r = event.getGuild().getRoleById("363726364605677571");
+            if (mr.contains(r)) {
+                event.getGuild().removeRoleFromMember(m.getIdLong(), r).queue();
+                ErrorHandler.CustomEmbed(":white_check_mark: " + "Removed " + r.getName() + " role.", new Color(3, 193, 19), event);
             }
         }
         catch (Exception e) {
