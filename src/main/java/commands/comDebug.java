@@ -11,7 +11,7 @@ public class comDebug implements Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getMessage().getAuthor().getId().equals(Secrets.ownerId)) {
+            if (!event.getMessage().getAuthor().getId().equals(Secrets.OWNER)) {
                 ErrorHandler.CustomEmbedError("You have to be the owner to be able to execute this command.", event);
                 return true;
             }

@@ -4,22 +4,14 @@ import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 
 public class comAddUserToProject implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("546580860456009760"))) {
-                ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCuria(event);
     }
 
     @Override
@@ -35,8 +27,8 @@ public class comAddUserToProject implements commands.Command{
                     userid = Args[0].replace("<", "").replace(">", "").replace("@", "").replace("!", "");
                     username = event.getJDA().retrieveUserById(userid).complete().getName();
 
-                    if (!userid.equals(event.getMessage().getAuthor().getId()) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                        ErrorHandler.CustomEmbedError("Invalid user. Only Centurions and Quaestors can submit project applications for other people.", event);
+                    if (!userid.equals(event.getMessage().getAuthor().getId()) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
+                        ErrorHandler.CustomEmbedError("Invalid user. Only Centurions can submit project applications for other people.", event);
                         return;
                     }
                 } else {
@@ -58,13 +50,13 @@ public class comAddUserToProject implements commands.Command{
                 comment = Args[2];
             }
 
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
+            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
                 Secrets.projectReqList.put(userid, new ProjectAddRequest(event, projectid, userid, username, comment));
 
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setColor(new Color(3, 193, 19));
                 eb.setFooter("edbotJ", event.getJDA().getSelfUser().getAvatarUrl());
-                eb.setDescription(":white_check_mark: Your project application has been sent, " + event.getAuthor().getAsMention() +"! You will be DM'ed once your request has been reviewed by a Centurion or Quaestor, so do not leave the server.");
+                eb.setDescription(":white_check_mark: Your project application has been sent, " + event.getAuthor().getAsMention() +"! You will be DM'ed once your request has been reviewed by a Centurion, so do not leave the server.");
                 event.getChannel().sendMessage(eb.build()).queue();
 
                 eb.setTitle("Project application by " + event.getAuthor().getName() + ":");

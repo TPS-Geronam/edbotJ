@@ -5,22 +5,14 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.util.List;
 
 public class comAddDev implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCenturion(event);
     }
 
     @Override

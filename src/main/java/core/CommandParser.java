@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CommandParser {
     public static CommandContainer parser(String raw, MessageReceivedEvent event) {
-        String beheaded = raw.replaceFirst(Secrets.prefix, "");
+        String beheaded = raw.replaceFirst(Secrets.prefix, "").replaceAll(" +", "");
         String[] splitBeheaded;
         if (raw.contains("\"") && raw.contains(" ")) {
 

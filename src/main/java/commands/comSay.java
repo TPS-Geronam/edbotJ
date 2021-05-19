@@ -1,28 +1,18 @@
 package commands;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import core.ErrorHandler;
-import core.Main;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.util.Arrays;
 
 public class comSay implements Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) && !event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) {
-                ErrorHandler.CustomEmbedError("You have to be a Centurion or Quaestor to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCenturion(event);
     }
 
     @Override

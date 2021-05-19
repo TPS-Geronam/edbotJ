@@ -3,13 +3,14 @@ package commands.mariadb.devs;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 
 public class comProcuratores implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        return event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId());
+        return SharedComRequirements.checkSelf(event);
     }
 
     @Override

@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 import java.util.List;
@@ -13,16 +14,7 @@ import java.util.List;
 public class comRemoveHiatus implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("546580860456009760"))) {
-                ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCuria(event);
     }
 
     @Override
@@ -43,7 +35,7 @@ public class comRemoveHiatus implements commands.Command{
                 return;
             }
 
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307"))) {
+            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
                 if (event.getAuthor().getId().equals(userid)) {
                     HiatusManager.RemoveHiatusFromDB(event, userid);
                 } else {
@@ -59,7 +51,7 @@ public class comRemoveHiatus implements commands.Command{
 
             Member m = event.getGuild().retrieveMemberById(userid).complete();
             List<Role> mr = m.getRoles();
-            Role r = event.getGuild().getRoleById("363726364605677571");
+            Role r = event.getGuild().getRoleById(Secrets.HIATUS);
             if (mr.contains(r)) {
                 event.getGuild().removeRoleFromMember(m.getIdLong(), r).queue();
                 ErrorHandler.CustomEmbed(":white_check_mark: " + "Removed " + r.getName() + " role.", new Color(3, 193, 19), event);

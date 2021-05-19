@@ -1,19 +1,19 @@
-package commands;
+package commands.mariadb.playtest;
 
+import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import util.General;
 import util.Secrets;
 import util.SharedComRequirements;
 
-public class comInfo implements Command{
+public class comReqReport implements commands.Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        return SharedComRequirements.checkSelf(event);
+        return SharedComRequirements.checkCuria(event);
     }
 
     @Override
     public void action(String[] Args, MessageReceivedEvent event) {
-        try { event.getTextChannel().sendMessage(General.getInfoEmbed(null, event, "edbotJ:").build()).queue(); } catch (Exception ignored) { }
+
     }
 
     @Override
@@ -23,11 +23,11 @@ public class comInfo implements Command{
 
     @Override
     public String help() {
-        return Secrets.prefix + "info";
+        return Secrets.prefix + "rqplay <name>";
     }
 
     @Override
     public String longhelp() {
-        return "Shows general info about the bot.";
+        return "Requests a playtest report from the database.";
     }
 }

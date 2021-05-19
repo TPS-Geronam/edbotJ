@@ -12,11 +12,10 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class General {
     public static EmbedBuilder getInfoEmbed(ReadyEvent event, MessageReceivedEvent mevent, String title) throws ExecutionException, InterruptedException {
-        JDA usedJDA = null;
+        JDA usedJDA;
         if (event == null) {
             usedJDA = mevent.getJDA();
         } else {
@@ -27,11 +26,11 @@ public class General {
         eb.setColor(new Color(3, 193, 19));
         eb.setFooter("edbotJ", usedJDA.getSelfUser().getAvatarUrl());
         eb.addField("System", "Platform: " + System.getProperty("os.name") + "\nVersion: " + System.getProperty("os.version") + "\nArch: " + System.getProperty("os.arch"), true);
-        long runt = System.nanoTime() - Secrets.startTime;
+        long runt = System.nanoTime() - Secrets.STARTTIME;
         long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        eb.addField("edbotJ", "Runtime: " + TimeUnit.HOURS.convert(runt, TimeUnit.NANOSECONDS) + "h" + "\nU.Memory: " + mem / 1000000 + "MB" + "\nVersion: " + Secrets.version, true);
+        eb.addField("edbotJ", "Runtime: " + TimeUnit.HOURS.convert(runt, TimeUnit.NANOSECONDS) + "h" + "\nU.Memory: " + mem / 1000000 + "MB" + "\nVersion: " + Secrets.VERSION, true);
         eb.addField("Discord", "Guilds: " + CountGuilds(usedJDA.getGuilds()) + "\nUsers: " + CountUsers(usedJDA.getUsers()) + "\nPing: " + usedJDA.getGatewayPing() + "ms", true);
-        RestAction<User> u = usedJDA.retrieveUserById(Secrets.ownerId);
+        RestAction<User> u = usedJDA.retrieveUserById(Secrets.OWNER);
         eb.addField("Info", "edbotJ was written by " + u.submit().get().getAsMention() + " with the help of [JDA 4.2](https://github.com/DV8FromTheWorld/JDA).", true);
 
         return eb;

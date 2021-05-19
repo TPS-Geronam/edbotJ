@@ -1,26 +1,17 @@
 package commands.mariadb.hiatuses;
 
 import core.ErrorHandler;
-import core.Main;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 
 public class comUpdateHiatus implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("546580860456009760"))) {
-                ErrorHandler.CustomEmbedError("You have to be a dev to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCuria(event);
     }
 
     @Override
@@ -70,7 +61,7 @@ public class comUpdateHiatus implements commands.Command{
                 comment = Args[4];
             }
 
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307"))) {
+            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
                 if (event.getAuthor().getId().equals(userid)) {
                     HiatusManager.UpdateHiatusToDB(event, userid, reason, end, start, comment);
                 } else {

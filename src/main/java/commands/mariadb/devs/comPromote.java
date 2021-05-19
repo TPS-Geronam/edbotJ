@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 import java.util.List;
@@ -12,16 +13,7 @@ import java.util.List;
 public class comPromote implements commands.Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById("337176399532130307"))) {
-                ErrorHandler.CustomEmbedError("You have to be a Centurion to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkCenturion(event);
     }
 
     @Override
@@ -42,10 +34,10 @@ public class comPromote implements commands.Command{
         Member m = event.getGuild().retrieveMemberById(userid).complete();
         List<Role> mr = m.getRoles();
         Role[] sr = new Role[4];
-        sr[0] = event.getGuild().getRoleById("337164158489591809"); //Civitate
-        sr[1] = event.getGuild().getRoleById("337170798592917506"); //Senate
-        sr[2] = event.getGuild().getRoleById("358939888386703371"); //Disciplio
-        sr[3] = event.getGuild().getRoleById("546580860456009760"); //Curia
+        sr[0] = event.getGuild().getRoleById(Secrets.CIVITATE);
+        sr[1] = event.getGuild().getRoleById(Secrets.SENATE);
+        sr[2] = event.getGuild().getRoleById(Secrets.DISCIPLIO);
+        sr[3] = event.getGuild().getRoleById(Secrets.CURIA);
 
         //not a civitate
         if (!mr.contains(sr[0])) {
