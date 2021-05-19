@@ -33,7 +33,7 @@ public class Main {
         builder.setToken(Secrets.getTokenM());
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setAutoReconnect(true);
-        builder.setActivity(Activity.listening(Secrets.prefix + "help | v" + Secrets.version));
+        builder.setActivity(Activity.listening(Secrets.prefix + "help | v" + Secrets.VERSION));
 
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);

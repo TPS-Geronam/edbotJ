@@ -10,8 +10,8 @@ import util.General;
 public class ReadyListener extends ListenerAdapter {
     public void onReady(ReadyEvent event) {
         if (Secrets.debug) {
-            Guild g = event.getJDA().getGuildById(Secrets.nodeGuildId);
-            Member m = g.retrieveMemberById(Secrets.ownerId).complete();
+            Guild g = event.getJDA().getGuildById(Secrets.NODEGUILD);
+            Member m = g.retrieveMemberById(Secrets.OWNER).complete();
             User owner = m.getUser();
 
             owner.openPrivateChannel().queue((channel) -> {

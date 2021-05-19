@@ -9,7 +9,7 @@ import util.Secrets;
 
 public class CommandListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
-        if ((!event.isFromType(ChannelType.PRIVATE) || event.getMessage().getAuthor().getId().equals(Secrets.ownerId)) && event.getMessage().getContentRaw().startsWith(Secrets.prefix) && !event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
+        if ((!event.isFromType(ChannelType.PRIVATE) || event.getMessage().getAuthor().getId().equals(Secrets.OWNER)) && event.getMessage().getContentRaw().startsWith(Secrets.prefix) && !event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
             CommandHandler.HandleCommand(CommandParser.parser(event.getMessage().getContentRaw(), event));
         }
     }
