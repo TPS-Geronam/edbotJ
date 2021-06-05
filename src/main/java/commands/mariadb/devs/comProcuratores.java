@@ -31,13 +31,20 @@ public class comProcuratores implements commands.Command{
 
     }
 
+    public static void AddProcuratores() {
+        Secrets.procuratores.put("programmator", "319861468705325057");
+        Secrets.procuratores.put("historicus", "319861531879800832");
+        Secrets.procuratores.put("scriptor", "810765049840009237");
+        Secrets.procuratores.put("artifex", "321670679743430657");
+    }
+
     @Override
     public String help() {
-        return Secrets.prefix + "procuratores";
+        return Secrets.prefix + "jobs";
     }
 
     @Override
     public String longhelp() {
-        return "Lists all current procuratores.";
+        return "Lists all current job roles/procuratores.";
     }
 }

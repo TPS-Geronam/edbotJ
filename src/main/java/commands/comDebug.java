@@ -4,22 +4,14 @@ import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
+import util.SharedComRequirements;
 
 import java.awt.*;
 
 public class comDebug implements Command{
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getId().equals(event.getJDA().getSelfUser().getId())) {
-            if (!event.getMessage().getAuthor().getId().equals(Secrets.OWNER)) {
-                ErrorHandler.CustomEmbedError("You have to be the owner to be able to execute this command.", event);
-                return true;
-            }
-            return false;
-        }
-        else {
-            return true;
-        }
+        return SharedComRequirements.checkOwner(event);
     }
 
     @Override

@@ -35,9 +35,10 @@ public class comRemoveHiatus implements commands.Command{
                 return;
             }
 
+            boolean removed = false;
             if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
                 if (event.getAuthor().getId().equals(userid)) {
-                    HiatusManager.RemoveHiatusFromDB(event, userid);
+                    removed = HiatusManager.RemoveHiatusFromDB(event, userid);
                 } else {
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(new Color(200, 0, 0));
@@ -46,18 +47,19 @@ public class comRemoveHiatus implements commands.Command{
                     event.getChannel().sendMessage(eb.build()).queue();
                 }
             } else {
-                HiatusManager.RemoveHiatusFromDB(event, userid);
+                removed = HiatusManager.RemoveHiatusFromDB(event, userid);
             }
 
-            Member m = event.getGuild().retrieveMemberById(userid).complete();
-            List<Role> mr = m.getRoles();
-            Role r = event.getGuild().getRoleById(Secrets.HIATUS);
-            if (mr.contains(r)) {
-                event.getGuild().removeRoleFromMember(m.getIdLong(), r).queue();
-                ErrorHandler.CustomEmbed(":white_check_mark: " + "Removed " + r.getName() + " role.", new Color(3, 193, 19), event);
+            if (removed) {
+                Member m = event.getGuild().retrieveMemberById(userid).complete();
+                List<Role> mr = m.getRoles();
+                Role r = event.getGuild().getRoleById(Secrets.HIATUS);
+                if (mr.contains(r)) {
+                    event.getGuild().removeRoleFromMember(m.getIdLong(), r).queue();
+                    ErrorHandler.CustomEmbed(":white_check_mark: " + "Removed " + r.getName() + " role.", new Color(3, 193, 19), event);
+                }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }

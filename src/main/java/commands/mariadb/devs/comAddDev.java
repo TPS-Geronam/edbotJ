@@ -27,8 +27,7 @@ public class comAddDev implements commands.Command{
                 ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
                 return;
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Invalid user.", event);
             return;
         }

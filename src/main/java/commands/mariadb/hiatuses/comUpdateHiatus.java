@@ -74,8 +74,7 @@ public class comUpdateHiatus implements commands.Command{
             } else {
                 HiatusManager.UpdateHiatusToDB(event, userid, reason, end, start, comment);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }

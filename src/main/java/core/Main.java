@@ -2,6 +2,7 @@ package core;
 
 import commands.*;
 import commands.mariadb.devs.*;
+import commands.mariadb.playtest.*;
 import commands.mariadb.projects.*;
 import commands.mariadb.hiatuses.*;
 import listeners.CommandListener;
@@ -10,10 +11,6 @@ import listeners.ReadyListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.AccountType;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -26,7 +23,7 @@ import util.Secrets;
 public class Main {
     public static JDABuilder builder;
 
-    static Logger logger = Logger.getLogger(Main.class);
+    public static final Logger logger = Logger.getLogger(Main.class);
 
     public static void main(String[] arguments) throws Exception {
         builder = JDABuilder.createDefault(Secrets.getTokenM());
@@ -44,8 +41,9 @@ public class Main {
 
         AddListeners();
         AddCommands();
-        AddVicari();
-        AddProcuratores();
+
+        comVicari.AddVicari();
+        comProcuratores.AddProcuratores();
 
         JDA api = builder.build();
     }
@@ -56,20 +54,6 @@ public class Main {
         builder.addEventListeners(new ReactionAddedListener());
     }
 
-    public static void AddVicari() {
-        Secrets.vicari.put("a", "721305581805240410");
-        Secrets.vicari.put("b", "608041250951528507");
-        Secrets.vicari.put("c", "721305674541170818");
-        Secrets.vicari.put("d", "608032654394261547");
-        Secrets.vicari.put("machina", "478479243991318536");
-        Secrets.vicari.put("artifex", "321670679743430657");
-    }
-
-    public static void AddProcuratores() {
-        Secrets.procuratores.put("programmator", "319861468705325057");
-        Secrets.procuratores.put("historicus", "319861531879800832");
-    }
-
     public static void AddCommands() {
         Command help = new comHelp();
         Command ahelp = new comAdminHelp();
@@ -78,8 +62,8 @@ public class Main {
         Command hiatus = new comAddHiatus();
         Command hremove = new comRemoveHiatus();
         Command hupdate = new comUpdateHiatus();
-        //Command vicari = new comVicari();
-        //Command procuratores = new comProcuratores();
+        Command vicari = new comVicari();
+        Command procuratores = new comProcuratores();
         Command debug = new comDebug();
 
         //Command promote = new comPromote();
@@ -88,10 +72,14 @@ public class Main {
         Command rdev = new comRemoveDev();
         Command devall = new comAddAllDevs();
         Command devclear = new comClearDevs();
-        //Command addproject = new comAddProject();
-        //Command delproject = new comDeleteProject();
-        //Command prjadd = new comAddUserToProject();
-        //Command prjremove = new comRemoveUserFromProject();
+        Command addproject = new comAddProject();
+        Command delproject = new comDeleteProject();
+        Command prjadd = new comAddUserToProject();
+        Command prjremove = new comRemoveUserFromProject();
+        Command rqplay = new comReqReport();
+        Command lplay = new comReqAllReports();
+        Command rmvplay = new comRemReport();
+        Command aplay = new comAddReport();
 
         //Commands
         //General
@@ -99,8 +87,8 @@ public class Main {
         CommandHandler.commands.put("ahelp", ahelp);
         CommandHandler.commands.put("say", say);
         CommandHandler.commands.put("info", info);
-        //CommandHandler.commands.put("vicari", vicari);
-        //CommandHandler.commands.put("procuratores", procuratores);
+        CommandHandler.commands.put("zones", vicari);
+        CommandHandler.commands.put("jobs", procuratores);
         CommandHandler.commands.put("debug", debug);
 
         //MariaDB
@@ -113,10 +101,14 @@ public class Main {
         CommandHandler.commands.put("rdev", rdev);
         CommandHandler.commands.put("devall", devall);
         CommandHandler.commands.put("devclear", devclear);
-        //CommandHandler.commands.put("addproject", addproject);
-        //CommandHandler.commands.put("delproject", delproject);
-        //CommandHandler.commands.put("prjadd", prjadd);
-        //CommandHandler.commands.put("prjremove", prjremove);
+        CommandHandler.commands.put("addproject", addproject);
+        CommandHandler.commands.put("delproject", delproject);
+        CommandHandler.commands.put("prjadd", prjadd);
+        CommandHandler.commands.put("prjremove", prjremove);
+        CommandHandler.commands.put("rqplay", rqplay);
+        CommandHandler.commands.put("lplay", lplay);
+        CommandHandler.commands.put("rmvplay", rmvplay);
+        CommandHandler.commands.put("aplay", aplay);
 
         //Help
         CommandHandler.commandsHelp.add("`general` : Collection of general commands everyone can use." + "\n");
@@ -125,15 +117,19 @@ public class Main {
         //General
         CommandHandler.commandsHelpGeneral.add("```" + help.help() + "```: " + help.longhelp() + "\n");
         CommandHandler.commandsHelpGeneral.add("```" + info.help() + "```: " + info.longhelp() + "\n");
-        //CommandHandler.commandsHelpGeneral.add("```" + vicari.help() + "```: " + vicari.longhelp() + "\n");
-        //CommandHandler.commandsHelpGeneral.add("```" + procuratores.help() + "```: " + procuratores.longhelp() + "\n");
+        CommandHandler.commandsHelpGeneral.add("```" + vicari.help() + "```: " + vicari.longhelp() + "\n");
+        CommandHandler.commandsHelpGeneral.add("```" + procuratores.help() + "```: " + procuratores.longhelp() + "\n");
 
         //MariaDB
         CommandHandler.commandsHelpDB.add("```" + hiatus.help() + "```: " + hiatus.longhelp() + "\n");
         CommandHandler.commandsHelpDB.add("```" + hremove.help() + "```: " + hremove.longhelp() + "\n");
         CommandHandler.commandsHelpDB.add("```" + hupdate.help() + "```: " + hupdate.longhelp() + "\n");
-        //CommandHandler.commandsHelpDB.add("```" + prjadd.help() + "```: " + prjadd.longhelp() + "\n");
-        //CommandHandler.commandsHelpDB.add("```" + prjremove.help() + "```: " + prjremove.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + prjadd.help() + "```: " + prjadd.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + prjremove.help() + "```: " + prjremove.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + rqplay.help() + "```: " + rqplay.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + lplay.help() + "```: " + lplay.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + rmvplay.help() + "```: " + rmvplay.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + aplay.help() + "```: " + aplay.longhelp() + "\n");
 
         //Admin Help
         CommandHandler.commandsAdminHelp.add("`general` : Collection of general admin commands." + "\n");
@@ -151,7 +147,7 @@ public class Main {
         CommandHandler.commandsAdminHelpDB.add("```" + rdev.help() + "```: " + rdev.longhelp() + "\n");
         CommandHandler.commandsAdminHelpDB.add("```" + devall.help() + "```: " + devall.longhelp() + "\n");
         CommandHandler.commandsAdminHelpDB.add("```" + devclear.help() + "```: " + devclear.longhelp() + "\n");
-        //CommandHandler.commandsAdminHelpDB.add("```" + addproject.help() + "```: " + addproject.longhelp() + "\n");
-        //CommandHandler.commandsAdminHelpDB.add("```" + delproject.help() + "```: " + delproject.longhelp() + "\n");
+        CommandHandler.commandsAdminHelpDB.add("```" + addproject.help() + "```: " + addproject.longhelp() + "\n");
+        CommandHandler.commandsAdminHelpDB.add("```" + delproject.help() + "```: " + delproject.longhelp() + "\n");
     }
 }

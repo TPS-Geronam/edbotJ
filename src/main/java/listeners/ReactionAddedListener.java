@@ -15,7 +15,7 @@ public class ReactionAddedListener extends ListenerAdapter {
     public void onMessageReactionAdd(MessageReactionAddEvent event) {
         //adding a project request
         String react = event.getReactionEmote().getName();
-        if (event.getChannel().getId().equals(Secrets.projectEndchan) && (event.getMember().getRoles().contains(event.getGuild().getRoleById("337176399532130307")) || event.getMember().getRoles().contains(event.getGuild().getRoleById("489942850725871636"))) && react.equals("✅") || react.equals("❎")) {
+        if (event.getChannel().getId().equals(Secrets.projectEndchan) && (event.getMember().getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) && react.equals("✅") || react.equals("❎")) {
             String messageid = event.getReaction().getMessageId();
             Message m = event.getChannel().getHistory().getMessageById(messageid);//.complete();
 
@@ -48,9 +48,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                             eb.setColor(new Color(200, 0, 0));
                             eb.setDescription("Hey, " + req.GetEvent().getAuthor().getName() + "! Your project application has been denied. Maybe you already have submitted one before?\nIf you want to request to be removed from your current project, use the `" + Secrets.prefix + "prjremove` command.");
 
-                            req.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> {
-                                channel.sendMessage(eb.build()).queue();
-                            });
+                            req.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
 
                             eb.setColor(new Color(193, 114, 0));
                             eb.setDescription("Project dismissal application for " + req.GetUsername() + " denied by " + event.getUser().getName() + ".");
@@ -73,9 +71,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                                 eb.setDescription("Hey, " + reqRemove.GetEvent().getAuthor().getName() + "! You don't seem to be a part of any projects.\nIf you want to request to be added to a project, use the `" + Secrets.prefix + "prjadd` command.");
                             }
 
-                            reqRemove.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> {
-                                channel.sendMessage(eb.build()).queue();
-                            });
+                            reqRemove.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
 
                             eb.setColor(new Color(193, 114, 0));
                             eb.setDescription("Project application for " + reqRemove.GetUsername() + " accepted by " + event.getUser().getName() + ".");
@@ -87,9 +83,7 @@ public class ReactionAddedListener extends ListenerAdapter {
                             eb.setColor(new Color(200, 0, 0));
                             eb.setDescription("Hey, " + reqRemove.GetEvent().getAuthor().getName() + "! Your project dismissal application has been denied. Maybe you've just been assigned to one?");
 
-                            reqRemove.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> {
-                                channel.sendMessage(eb.build()).queue();
-                            });
+                            reqRemove.GetEvent().getAuthor().openPrivateChannel().queue((channel) -> channel.sendMessage(eb.build()).queue());
 
                             eb.setColor(new Color(193, 114, 0));
                             eb.setDescription("Project dismissal application for " + reqRemove.GetUsername() + " denied by " + event.getUser().getName() + ".");

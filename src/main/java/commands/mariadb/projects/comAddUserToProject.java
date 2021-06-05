@@ -35,8 +35,7 @@ public class comAddUserToProject implements commands.Command{
                     ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
                     return;
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 ErrorHandler.CustomEmbedError("Invalid user.", event);
                 return;
             }
@@ -70,8 +69,7 @@ public class comAddUserToProject implements commands.Command{
             } else {
                 PrjManager.AddUserToProject(event, projectid, userid, username, comment);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }

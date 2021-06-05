@@ -1,6 +1,5 @@
 package core;
 
-import com.mysql.cj.mysqla.io.CommandBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 
@@ -10,10 +9,12 @@ import java.util.List;
 
 public class CommandParser {
     public static CommandContainer parser(String raw, MessageReceivedEvent event) {
-        String beheaded = raw.replaceFirst(Secrets.prefix, "").replaceAll(" +", "");
+        String beheaded = raw.replaceFirst(Secrets.prefix, ""); // prefix
+        beheaded = beheaded.replaceAll(" +", " "); // multiple spaces
+        beheaded = beheaded.replaceAll("Åg", "\"").replaceAll("Åh", "\""); // unicode quotes
+
         String[] splitBeheaded;
         if (raw.contains("\"") && raw.contains(" ")) {
-
             String[] splitTemp = beheaded.split("\"");
             String[] splitTempZero = splitTemp[0].split(" ");
 
@@ -23,12 +24,10 @@ public class CommandParser {
                     list.add(sd);
                 }
             }
-            splitBeheaded = list.toArray(new String[list.size()]);
-        }
-        else if (raw.contains("\"")) {
+            splitBeheaded = list.toArray(new String[0]);
+        } else if (raw.contains("\"")) {
             splitBeheaded = beheaded.replace(" \"", "\"").split("\"");
-        }
-        else {
+        } else {
             splitBeheaded = beheaded.split(" ");
         }
         String invoke = splitBeheaded[0];

@@ -33,8 +33,7 @@ public class comRemoveUserFromProject implements commands.Command{
                     ErrorHandler.CustomEmbedError("Invalid user. Use `@Username` (ping).", event);
                     return;
                 }
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 ErrorHandler.CustomEmbedError("Invalid user.", event);
                 return;
             }
@@ -55,8 +54,7 @@ public class comRemoveUserFromProject implements commands.Command{
             } else {
                 PrjManager.DeleteUserFromProject(event, userid);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }

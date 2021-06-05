@@ -2,6 +2,7 @@ package commands.mariadb;
 
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.apache.commons.io.IOUtils;
 import util.Secrets;
 
 import java.awt.*;
@@ -14,12 +15,7 @@ import java.util.Base64;
 public class DBManager {
     public static boolean EstablishConnection(MessageReceivedEvent event, String target) {
         try {
-            URL script = new URL(Secrets.getDBHost() + target);
-            URLConnection sc = script.openConnection();
-            String userpass = Secrets.getDBAccess();
-            String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userpass.getBytes()));
-            sc.setRequestProperty ("Authorization", basicAuth);
-            BufferedReader in = new BufferedReader(new InputStreamReader(sc.getInputStream()));
+            BufferedReader in = BaseConnection(target);
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
@@ -33,12 +29,37 @@ public class DBManager {
                     return false;
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             if (Secrets.debug) {
                 ErrorHandler.CustomEmbedError(e.getMessage(), event);
             }
         }
         return false;
+    }
+
+    public static String EstablishConnectionReturn(MessageReceivedEvent event, String target) {
+        try {
+            BufferedReader in = BaseConnection(target);
+
+            String inputLine = IOUtils.toString(in);
+            //while ((inputLine = in.readLine()) != null) {
+                in.close();
+                return inputLine;
+            //}
+        } catch (Exception e) {
+            if (Secrets.debug) {
+                ErrorHandler.CustomEmbedError(e.getMessage(), event);
+            }
+        }
+        return "";
+    }
+
+    private static BufferedReader BaseConnection(String target) throws Exception {
+        URL script = new URL(Secrets.getDBHost() + target);
+        URLConnection sc = script.openConnection();
+        String userpass = Secrets.getDBAccess();
+        String basicAuth = "Basic " + new String(Base64.getEncoder().encode(userpass.getBytes()));
+        sc.setRequestProperty ("Authorization", basicAuth);
+        return new BufferedReader(new InputStreamReader(sc.getInputStream()));
     }
 }

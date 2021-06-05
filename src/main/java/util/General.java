@@ -12,6 +12,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 public class General {
     public static EmbedBuilder getInfoEmbed(ReadyEvent event, MessageReceivedEvent mevent, String title) throws ExecutionException, InterruptedException {
@@ -36,19 +37,62 @@ public class General {
         return eb;
     }
 
-    public static int CountGuilds(java.util.List<Guild> guilds){
+    public static int CountGuilds(java.util.List<Guild> guilds) {
         int count = 0;
-        for(int i = 0; i < guilds.size(); i++){
+        for (int i = 0; i < guilds.size(); i++) {
             count++;
         }
         return count;
     }
 
-    public static int CountUsers(List<User> users){
+    public static int CountUsers(List<User> users) {
         int count = 0;
-        for(int i = 0; i < users.size(); i++){
+        for (int i = 0; i < users.size(); i++) {
             count++;
         }
         return count;
+    }
+
+    /**
+     * RegEx for Web URL
+     * <p><a href="https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/util/Patterns.java">Source GitHub</a>
+    */
+    public static final String GOOD_IRI_CHAR =
+            "a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
+
+    public static Pattern IP_ADDRESS () {
+        return Pattern.compile(
+                "((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4]"
+                        + "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]"
+                        + "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}"
+                        + "|[1-9][0-9]|[0-9]))");
+    }
+
+    /**
+     * RFC 1035 Section 2.3.4 limits the labels to a maximum 63 octets.
+     */
+    private static final String IRI
+            = "[" + GOOD_IRI_CHAR + "]([" + GOOD_IRI_CHAR + "\\-]{0,61}[" + GOOD_IRI_CHAR + "]){0,1}";
+
+    private static final String GOOD_GTLD_CHAR =
+            "a-zA-Z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF";
+
+    private static final String GTLD = "[" + GOOD_GTLD_CHAR + "]{2,63}";
+    private static final String HOST_NAME = "(" + IRI + "\\.)+" + GTLD;
+
+    public static Pattern DOMAIN_NAME() {
+        return Pattern.compile("(" + HOST_NAME + "|" + IP_ADDRESS() + ")");
+    }
+
+    public static Pattern WEB_URL() {
+        return Pattern.compile(
+            "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)"
+                    + "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_"
+                    + "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?"
+                    + "(?:" + DOMAIN_NAME() + ")"
+                    + "(?:\\:\\d{1,5})?)" // plus option port number
+                    + "(\\/(?:(?:[" + GOOD_IRI_CHAR + "\\;\\/\\?\\:\\@\\&\\=\\#\\~"  // plus option query params
+                    + "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?"
+                    + "(?:\\b|$)");
     }
 }

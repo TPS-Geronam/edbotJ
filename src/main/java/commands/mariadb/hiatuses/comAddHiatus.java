@@ -1,7 +1,6 @@
 package commands.mariadb.hiatuses;
 
 import core.ErrorHandler;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -65,8 +64,7 @@ public class comAddHiatus implements commands.Command{
                 comment = Args[4];
             }
 
-            //337176399532130307: centurion
-            /*if (!event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById("337176399532130307"))) {
+            /*if (!event.getGuild().getMemberById(event.getAuthor().getId()).getRoles().contains(event.getGuild().getRoleById(Secrets.CENTURION))) {
                 Secrets.hiatusList.put(userid, new HiatusRequest(event, userid, username, reason, comment, start, end));
 
                 EmbedBuilder eb = new EmbedBuilder();
@@ -86,18 +84,18 @@ public class comAddHiatus implements commands.Command{
                 }
                 event.getJDA().getTextChannelById(Secrets.hiatusEndchan).sendMessage(eb.build()).queue();
             } else {*/
-                HiatusManager.AddHiatusToDB(event, userid, username, reason, end, start, comment);
+            boolean added = HiatusManager.AddHiatusToDB(event, userid, username, reason, end, start, comment);
             //}
-
-            Member m = event.getGuild().retrieveMemberById(userid).complete();
-            List<Role> mr = m.getRoles();
-            Role r = event.getGuild().getRoleById(Secrets.HIATUS);
-            if (!mr.contains(r)) {
-                event.getGuild().addRoleToMember(m.getIdLong(), r).queue();
-                ErrorHandler.CustomEmbed(":white_check_mark: " + "Added " + r.getName() + " role.", new Color(3, 193, 19), event);
+            if (added) {
+                Member m = event.getGuild().retrieveMemberById(userid).complete();
+                List<Role> mr = m.getRoles();
+                Role r = event.getGuild().getRoleById(Secrets.HIATUS);
+                if (!mr.contains(r)) {
+                    event.getGuild().addRoleToMember(m.getIdLong(), r).queue();
+                    ErrorHandler.CustomEmbed(":white_check_mark: " + "Added " + r.getName() + " role.", new Color(3, 193, 19), event);
+                }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             ErrorHandler.CustomEmbedError("Wrong syntax.", event);
         }
     }
