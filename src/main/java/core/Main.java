@@ -80,6 +80,9 @@ public class Main {
         Command lplay = new comReqAllReports();
         Command rmvplay = new comRemReport();
         Command aplay = new comAddReport();
+        Command lplayreq = new comReqAllRequests();
+        Command rmvplayreq = new comRemRequest();
+        Command aplayreq = new comAddRequest();
 
         //Commands
         //General
@@ -109,6 +112,9 @@ public class Main {
         CommandHandler.commands.put("lplay", lplay);
         CommandHandler.commands.put("rmvplay", rmvplay);
         CommandHandler.commands.put("aplay", aplay);
+        CommandHandler.commands.put("lplayreq", lplayreq);
+        CommandHandler.commands.put("rmvplayreq", rmvplayreq);
+        CommandHandler.commands.put("aplayreq", aplayreq);
 
         //Help
         CommandHandler.commandsHelp.add("`general` : Collection of general commands everyone can use." + "\n");
@@ -130,6 +136,9 @@ public class Main {
         CommandHandler.commandsHelpDB.add("```" + lplay.help() + "```: " + lplay.longhelp() + "\n");
         CommandHandler.commandsHelpDB.add("```" + rmvplay.help() + "```: " + rmvplay.longhelp() + "\n");
         CommandHandler.commandsHelpDB.add("```" + aplay.help() + "```: " + aplay.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + lplayreq.help() + "```: " + lplayreq.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + rmvplayreq.help() + "```: " + rmvplayreq.longhelp() + "\n");
+        CommandHandler.commandsHelpDB.add("```" + aplayreq.help() + "```: " + aplayreq.longhelp() + "\n");
 
         //Admin Help
         CommandHandler.commandsAdminHelp.add("`general` : Collection of general admin commands." + "\n");
