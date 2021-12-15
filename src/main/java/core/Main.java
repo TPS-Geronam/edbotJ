@@ -15,15 +15,14 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.Secrets;
 
 public class Main {
     public static JDABuilder builder;
 
-    public static final Logger logger = Logger.getLogger(Main.class);
+    public static final ch.qos.logback.classic.Logger logger
+            = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] arguments) throws Exception {
         builder = JDABuilder.createDefault(Secrets.getTokenM());
@@ -35,9 +34,6 @@ public class Main {
         builder.setChunkingFilter(ChunkingFilter.ALL);
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         builder.setMemberCachePolicy(MemberCachePolicy.ALL);
-
-        BasicConfigurator.configure();
-        logger.setLevel(Level.WARN);
 
         AddListeners();
         AddCommands();
