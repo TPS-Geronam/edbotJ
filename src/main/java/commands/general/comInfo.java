@@ -11,7 +11,7 @@ public class comInfo implements GeneralCommand {
 
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        return SharedComRequirements.checkSelf(event);
+        return !SharedComRequirements.checkSelf(event);
     }
 
     @Override

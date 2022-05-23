@@ -18,7 +18,7 @@ public class comHelp implements GeneralCommand {
 
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        return SharedComRequirements.checkSelf(event);
+        return !SharedComRequirements.checkSelf(event);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class comHelp implements GeneralCommand {
                 LinkedList<LinkedList<String>> lHelpPages = new LinkedList<>();
                 lHelpPages.add(new LinkedList<>());
 
-                for (String s : helpRepo.get("Dev")) {
+                for (String s : helpRepo.get("DB")) {
                     if (String.join("", lHelpPages.get(totalFields - 1)).length() + s.length() > 1024) {
                         totalFields++;
                         lHelpPages.add(new LinkedList<>());

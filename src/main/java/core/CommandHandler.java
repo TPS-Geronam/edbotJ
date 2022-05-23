@@ -44,11 +44,11 @@ public class CommandHandler {
     public static void HandleCommand(CommandParser.CommandContainer cmd) {
         Map<String, Command> commands = commandBucket.getCommands();
         if (commands.containsKey(cmd.invoke)) {
-            boolean safe = commands.get(cmd.invoke).called(cmd.args, cmd.event);
-            if (!safe) {
+            boolean canExecute = commands.get(cmd.invoke).called(cmd.args, cmd.event);
+            if (canExecute) {
                 commands.get(cmd.invoke).action(cmd.args, cmd.event);
             }
-            commands.get(cmd.invoke).executed(safe, cmd.event);
+            commands.get(cmd.invoke).executed(canExecute, cmd.event);
         } else {
             ErrorHandler.CustomEmbedError("Command *" + Secrets.prefix + cmd.invoke + "* does not exist.", cmd.event);
         }

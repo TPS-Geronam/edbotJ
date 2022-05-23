@@ -13,25 +13,22 @@ import commands.mariadb.projects.comDeleteProject;
 import commands.mariadb.projects.comRemoveUserFromProject;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CommandBucket {
-    private final Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new LinkedHashMap<>();
 
     public CommandBucket() {
-        fillBucket(
+        Stream.of(
             new comHelp(),
             new comInfo(),
             new comAddHiatus(),
             new comRemoveHiatus(),
             new comUpdateHiatus(),
             new comVicari(),
-            new comProcuratores()
-        );
-
-        fillBucket(
+            new comProcuratores(),
             new comAddUserToProject(),
             new comRemoveUserFromProject(),
             new comReqReport(),
@@ -40,10 +37,7 @@ public class CommandBucket {
             new comAddReport(),
             new comReqAllRequests(),
             new comRemRequest(),
-            new comAddRequest()
-        );
-
-        fillBucket(
+            new comAddRequest(),
             new comAdminHelp(),
             new comSay(),
             new comDebug(),
@@ -53,11 +47,7 @@ public class CommandBucket {
             new comClearDevs(),
             new comAddProject(),
             new comDeleteProject()
-        );
-    }
-
-    private void fillBucket(Command... cc) {
-        Stream.of(cc).collect(Collectors.toList()).forEach(c -> {
+        ).collect(Collectors.toList()).forEach(c -> {
             commands.put(c.getCommandName(), c);
         });
     }

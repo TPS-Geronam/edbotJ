@@ -1,7 +1,6 @@
 package commands.mariadb.devs;
 
-import commands.interfaces.Command;
-import commands.interfaces.DBCommand;
+import commands.interfaces.GeneralCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -9,12 +8,12 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comProcuratores implements DBCommand {
+public class comProcuratores implements GeneralCommand {
     private final String commandName = "jobs";
 
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
-        return SharedComRequirements.checkSelf(event);
+        return !SharedComRequirements.checkSelf(event);
     }
 
     @Override

@@ -24,11 +24,11 @@ import java.util.Objects;
 public class Main {
     public static JDABuilder builder;
 
-    public static final ch.qos.logback.classic.Logger logger
+    public static final ch.qos.logback.classic.Logger LOGGER
             = (ch.qos.logback.classic.Logger)LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] arguments) throws Exception {
-        String token = Secrets.getTokenB();
+        String token = Secrets.getTokenM();
         builder = JDABuilder.createDefault(token);
         builder.setToken(token);
         builder.setStatus(OnlineStatus.ONLINE);

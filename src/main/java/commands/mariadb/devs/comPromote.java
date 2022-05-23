@@ -1,6 +1,5 @@
 package commands.mariadb.devs;
 
-import commands.interfaces.Command;
 import commands.interfaces.DBCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.entities.Member;

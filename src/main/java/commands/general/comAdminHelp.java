@@ -107,7 +107,7 @@ public class comAdminHelp implements AdminCommand, GeneralCommand {
                 LinkedList<LinkedList<String>> lHelpPages = new LinkedList<>();
                 lHelpPages.add(new LinkedList<>());
 
-                for (String s : helpRepo.get("Dev")) {
+                for (String s : helpRepo.get("DB")) {
                     if (String.join("", lHelpPages.get(totalFields - 1)).length() + s.length() > 1024) {
                         totalFields++;
                         lHelpPages.add(new LinkedList<>());
