@@ -1,11 +1,12 @@
 package commands.mariadb.projects;
 
+import commands.interfaces.AdminCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
 import util.SharedComRequirements;
 
-public class comAddProject implements commands.Command{
+public class comAddProject implements AdminCommand {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event);

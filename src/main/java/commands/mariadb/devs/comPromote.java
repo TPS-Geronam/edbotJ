@@ -1,5 +1,6 @@
 package commands.mariadb.devs;
 
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -10,7 +11,7 @@ import util.SharedComRequirements;
 import java.awt.*;
 import java.util.List;
 
-public class comPromote implements commands.Command{
+public class comPromote implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event);

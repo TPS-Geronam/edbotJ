@@ -1,6 +1,6 @@
-package commands;
+package commands.general;
 
-import core.ErrorHandler;
+import commands.interfaces.AdminCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -8,7 +8,7 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comDebug implements Command{
+public class comDebug implements AdminCommand {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkOwner(event);

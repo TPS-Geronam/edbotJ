@@ -49,7 +49,6 @@ public class Secrets {
             fis = new FileInputStream("prop.xml");
         }
         properties.loadFromXML(fis);
-
         return properties;
     }
 

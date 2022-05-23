@@ -1,6 +1,7 @@
 package commands.mariadb.playtest;
 
 import com.google.gson.*;
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -13,7 +14,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
 
-public class comReqAllReports implements commands.Command {
+public class comReqAllReports implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCuria(event) && !event.isFromType(ChannelType.PRIVATE);

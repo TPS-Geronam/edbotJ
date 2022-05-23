@@ -1,11 +1,12 @@
-package commands;
+package commands.general;
 
+import commands.interfaces.Command;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.General;
 import util.Secrets;
 import util.SharedComRequirements;
 
-public class comInfo implements Command{
+public class comInfo implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkSelf(event);
@@ -13,7 +14,8 @@ public class comInfo implements Command{
 
     @Override
     public void action(String[] Args, MessageReceivedEvent event) {
-        try { event.getTextChannel().sendMessage(General.getInfoEmbed(null, event, "edbotJ:").build()).queue(); } catch (Exception ignored) { }
+        try { event.getTextChannel().sendMessage(General.getInfoEmbed(null, event, "edbotJ:").build()).queue(); }
+        catch (Exception ignored) { }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package commands.mariadb.playtest;
 
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -13,7 +14,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
-public class comAddReport implements commands.Command {
+public class comAddReport implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCuria(event) && !event.isFromType(ChannelType.PRIVATE);

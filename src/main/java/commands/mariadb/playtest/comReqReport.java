@@ -3,6 +3,7 @@ package commands.mariadb.playtest;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -17,7 +18,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 
-public class comReqReport implements commands.Command {
+public class comReqReport implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCuria(event) && !event.isFromType(ChannelType.PRIVATE);

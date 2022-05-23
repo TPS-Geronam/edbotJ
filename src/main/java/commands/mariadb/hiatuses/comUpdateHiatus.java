@@ -1,5 +1,6 @@
 package commands.mariadb.hiatuses;
 
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,7 +9,7 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comUpdateHiatus implements commands.Command{
+public class comUpdateHiatus implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCuria(event);

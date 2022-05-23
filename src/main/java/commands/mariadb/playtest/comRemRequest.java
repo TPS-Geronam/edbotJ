@@ -1,5 +1,6 @@
 package commands.mariadb.playtest;
 
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -9,7 +10,7 @@ import util.SharedComRequirements;
 import java.util.Locale;
 import java.util.Objects;
 
-public class comRemRequest implements commands.Command {
+public class comRemRequest implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event) && !event.isFromType(ChannelType.PRIVATE);

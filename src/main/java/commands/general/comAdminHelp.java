@@ -1,5 +1,6 @@
-package commands;
+package commands.general;
 
+import commands.interfaces.AdminCommand;
 import core.CommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,7 +9,7 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comAdminHelp implements Command{
+public class comAdminHelp implements AdminCommand {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event);

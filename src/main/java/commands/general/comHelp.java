@@ -1,5 +1,6 @@
-package commands;
+package commands.general;
 
+import commands.interfaces.Command;
 import core.CommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -9,7 +10,7 @@ import util.SharedComRequirements;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class comHelp implements Command{
+public class comHelp implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkSelf(event);

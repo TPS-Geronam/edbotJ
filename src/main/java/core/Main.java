@@ -1,14 +1,12 @@
 package core;
 
 import commands.*;
+import commands.interfaces.AdminCommand;
+import commands.interfaces.Command;
 import commands.mariadb.devs.*;
-import commands.mariadb.playtest.*;
-import commands.mariadb.projects.*;
-import commands.mariadb.hiatuses.*;
 import listeners.CommandListener;
 import listeners.ReactionAddedListener;
 import listeners.ReadyListener;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
@@ -41,7 +39,7 @@ public class Main {
         comVicari.AddVicari();
         comProcuratores.AddProcuratores();
 
-        JDA api = builder.build();
+        builder.build();
     }
 
     public static void AddListeners() {
@@ -51,7 +49,9 @@ public class Main {
     }
 
     public static void AddCommands() {
-        Command help = new comHelp();
+        CommandBucket cb = new CommandBucket();
+
+        /*Command help = new comHelp();
         Command ahelp = new comAdminHelp();
         Command say = new comSay();
         Command info = new comInfo();
@@ -78,10 +78,15 @@ public class Main {
         Command aplay = new comAddReport();
         Command lplayreq = new comReqAllRequests();
         Command rmvplayreq = new comRemRequest();
-        Command aplayreq = new comAddRequest();
+        Command aplayreq = new comAddRequest();*/
 
         //Commands
         //General
+        for (Command c : cb.getCommandsGeneral()) {
+            if (c instanceof AdminCommand) {
+                CommandHandler
+            }
+        }
         CommandHandler.commands.put("help", help);
         CommandHandler.commands.put("ahelp", ahelp);
         CommandHandler.commands.put("say", say);

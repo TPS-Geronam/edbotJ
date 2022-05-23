@@ -1,6 +1,6 @@
 package core;
 
-import commands.Command;
+import commands.interfaces.Command;
 import util.Secrets;
 
 import java.util.ArrayList;

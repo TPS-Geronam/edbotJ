@@ -1,5 +1,6 @@
 package commands.mariadb.devs;
 
+import commands.interfaces.Command;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -7,7 +8,7 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comVicari implements commands.Command{
+public class comVicari implements Command {
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkSelf(event);

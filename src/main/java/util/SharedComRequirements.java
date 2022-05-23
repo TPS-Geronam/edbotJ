@@ -17,21 +17,22 @@ public class SharedComRequirements {
     }
 
     public static boolean checkId(MessageReceivedEvent event, String id, boolean idIsRole, String msg) {
-        if (!checkSelf(event)) {
-            if (idIsRole) {
-                if (!event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete().getRoles().contains(event.getGuild().getRoleById(id))) {
-                    ErrorHandler.CustomEmbedError(msg, event);
-                    return true;
-                }
-            } else {
-                if (!event.getMessage().getAuthor().getId().equals(id)) {
-                    ErrorHandler.CustomEmbedError(msg, event);
-                    return true;
-                }
-            }
-            return false;
+        if (checkSelf(event)) {
+            return true;
         }
-        return true;
+
+        if (idIsRole && !event.getGuild().retrieveMemberById(event.getAuthor().getId()).complete()
+            .getRoles().contains(event.getGuild().getRoleById(id))) {
+            ErrorHandler.CustomEmbedError(msg, event);
+            return true;
+        }
+
+        if (!event.getMessage().getAuthor().getId().equals(id)) {
+            ErrorHandler.CustomEmbedError(msg, event);
+            return true;
+        }
+
+        return false;
     }
 
     public static boolean checkSelf(MessageReceivedEvent event) {
