@@ -1,6 +1,6 @@
 package commands.general;
 
-import commands.interfaces.Command;
+import commands.interfaces.GeneralCommand;
 import core.CommandHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,9 +8,14 @@ import util.Secrets;
 import util.SharedComRequirements;
 
 import java.awt.*;
+import java.util.List;
 import java.util.LinkedList;
+import java.util.Map;
 
-public class comHelp implements Command {
+// a lot of duplication with comAdminHelp
+public class comHelp implements GeneralCommand {
+    private final String commandName = "help";
+
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkSelf(event);
@@ -19,6 +24,7 @@ public class comHelp implements Command {
     @Override
     public void action(String[] Args, MessageReceivedEvent event) {
         StringBuilder coms = new StringBuilder();
+        Map<String, List<String>> helpRepo = CommandHandler.commandHelpRepos.get("Dev");
 
         if (Args.length > 0) {
             if (Args[0].equals("general")) {
@@ -30,7 +36,7 @@ public class comHelp implements Command {
                 LinkedList<LinkedList<String>> lHelpPages = new LinkedList<>();
                 lHelpPages.add(new LinkedList<>());
 
-                for (String s : CommandHandler.commandsHelpGeneral) {
+                for (String s : helpRepo.get("General")) {
                     if (String.join("", lHelpPages.get(totalFields - 1)).length() + s.length() > 1024) {
                         totalFields++;
                         lHelpPages.add(new LinkedList<>());
@@ -71,7 +77,7 @@ public class comHelp implements Command {
                 LinkedList<LinkedList<String>> lHelpPages = new LinkedList<>();
                 lHelpPages.add(new LinkedList<>());
 
-                for (String s : CommandHandler.commandsHelpDB) {
+                for (String s : helpRepo.get("Dev")) {
                     if (String.join("", lHelpPages.get(totalFields - 1)).length() + s.length() > 1024) {
                         totalFields++;
                         lHelpPages.add(new LinkedList<>());
@@ -105,9 +111,7 @@ public class comHelp implements Command {
                 event.getTextChannel().sendMessage(ef.build()).queue();
             }
         } else {
-            for (int i = 0; i < CommandHandler.commandsHelp.size(); i++) {
-                coms.append(CommandHandler.commandsHelp.get(i));
-            }
+            CommandHandler.commandsHelp.forEach(coms::append);
 
             EmbedBuilder eb = new EmbedBuilder();
             eb.setColor(new Color(3, 193, 19));
@@ -126,11 +130,16 @@ public class comHelp implements Command {
 
     @Override
     public String help() {
-        return Secrets.prefix + "help [type]";
+        return Secrets.prefix + commandName + " [type]";
     }
 
     @Override
     public String longhelp() {
         return "Shows a list of publicly available commands. Use `[type]` to further define the area of commands you want help with.";
+    }
+
+    @Override
+    public String getCommandName() {
+        return commandName;
     }
 }

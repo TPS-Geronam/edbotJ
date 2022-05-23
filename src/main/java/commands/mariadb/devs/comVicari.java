@@ -1,6 +1,6 @@
 package commands.mariadb.devs;
 
-import commands.interfaces.Command;
+import commands.interfaces.DBCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import util.Secrets;
@@ -8,7 +8,9 @@ import util.SharedComRequirements;
 
 import java.awt.*;
 
-public class comVicari implements Command {
+public class comVicari implements DBCommand {
+    private final String commandName = "zones";
+
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkSelf(event);
@@ -54,11 +56,16 @@ public class comVicari implements Command {
 
     @Override
     public String help() {
-        return Secrets.prefix + "zones";
+        return Secrets.prefix + commandName;
     }
 
     @Override
     public String longhelp() {
         return "Lists all current zones.";
+    }
+
+    @Override
+    public String getCommandName() {
+        return commandName;
     }
 }

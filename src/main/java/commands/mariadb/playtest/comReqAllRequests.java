@@ -1,7 +1,7 @@
 package commands.mariadb.playtest;
 
 import com.google.gson.*;
-import commands.interfaces.Command;
+import commands.interfaces.DBCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -14,7 +14,9 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Objects;
 
-public class comReqAllRequests implements Command {
+public class comReqAllRequests implements DBCommand {
+    private final String commandName = "lplayreq";
+
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCuria(event) && !event.isFromType(ChannelType.PRIVATE);
@@ -76,12 +78,17 @@ public class comReqAllRequests implements Command {
 
     @Override
     public String help() {
-        return Secrets.prefix + "lplayreq [zone]";
+        return Secrets.prefix + commandName + " [zone]";
     }
 
     @Override
     public String longhelp() {
         return "Requests a list of all playtest requests from the database. `zone` can be" +
                 " specified to only display requests for said zone.";
+    }
+
+    @Override
+    public String getCommandName() {
+        return commandName;
     }
 }

@@ -1,6 +1,7 @@
 package commands.mariadb.devs;
 
 import commands.interfaces.Command;
+import commands.interfaces.DBCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -11,7 +12,9 @@ import util.SharedComRequirements;
 import java.awt.*;
 import java.util.List;
 
-public class comPromote implements Command {
+public class comPromote implements DBCommand {
+    private final String commandName = "promote";
+
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event);
@@ -103,11 +106,16 @@ public class comPromote implements Command {
 
     @Override
     public String help() {
-        return Secrets.prefix + "promote <user>";
+        return Secrets.prefix + commandName + " <user>";
     }
 
     @Override
     public String longhelp() {
         return "Promotes a user.";
+    }
+
+    @Override
+    public String getCommandName() {
+        return commandName;
     }
 }

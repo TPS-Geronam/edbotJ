@@ -12,17 +12,16 @@ import commands.mariadb.projects.comAddUserToProject;
 import commands.mariadb.projects.comDeleteProject;
 import commands.mariadb.projects.comRemoveUserFromProject;
 
-import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class CommandBucket {
-    private final List<Command> commandsGeneral;
-    private final List<Command> commandsDev;
-    private final List<Command> commandsAdmin;
+    private final Map<String, Command> commands = new HashMap<>();
 
     public CommandBucket() {
-        commandsGeneral = Stream.of(
+        fillBucket(
             new comHelp(),
             new comInfo(),
             new comAddHiatus(),
@@ -30,10 +29,9 @@ public class CommandBucket {
             new comUpdateHiatus(),
             new comVicari(),
             new comProcuratores()
+        );
 
-        ).collect(Collectors.toList());
-
-        commandsDev = Stream.of(
+        fillBucket(
             new comAddUserToProject(),
             new comRemoveUserFromProject(),
             new comReqReport(),
@@ -43,9 +41,9 @@ public class CommandBucket {
             new comReqAllRequests(),
             new comRemRequest(),
             new comAddRequest()
-        ).collect(Collectors.toList());
+        );
 
-        commandsAdmin = Stream.of(
+        fillBucket(
             new comAdminHelp(),
             new comSay(),
             new comDebug(),
@@ -55,18 +53,16 @@ public class CommandBucket {
             new comClearDevs(),
             new comAddProject(),
             new comDeleteProject()
-        ).collect(Collectors.toList());
+        );
     }
 
-    public List<Command> getCommandsGeneral() {
-        return commandsGeneral;
+    private void fillBucket(Command... cc) {
+        Stream.of(cc).collect(Collectors.toList()).forEach(c -> {
+            commands.put(c.getCommandName(), c);
+        });
     }
 
-    public List<Command> getCommandsDev() {
-        return commandsDev;
-    }
-
-    public List<Command> getCommandsAdmin() {
-        return commandsAdmin;
+    public Map<String, Command> getCommands() {
+        return commands;
     }
 }

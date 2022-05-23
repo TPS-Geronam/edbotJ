@@ -1,6 +1,7 @@
 package commands.general;
 
 import commands.interfaces.AdminCommand;
+import commands.interfaces.GeneralCommand;
 import core.ErrorHandler;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -10,7 +11,9 @@ import util.SharedComRequirements;
 
 import java.util.Arrays;
 
-public class comSay implements AdminCommand {
+public class comSay implements AdminCommand, GeneralCommand {
+    private final String commandName = "say";
+
     @Override
     public boolean called(String[] Args, MessageReceivedEvent event) {
         return SharedComRequirements.checkCenturion(event);
@@ -37,11 +40,16 @@ public class comSay implements AdminCommand {
 
     @Override
     public String help() {
-        return Secrets.prefix + "say <channel> <message>";
+        return Secrets.prefix + commandName + " <channel> <message>";
     }
 
     @Override
     public String longhelp() {
         return "Displays a message sent by edbotJ in the predefined text channel.";
+    }
+
+    @Override
+    public String getCommandName() {
+        return commandName;
     }
 }

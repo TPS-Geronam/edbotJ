@@ -1,4 +1,4 @@
 package commands.interfaces;
 
-public interface DBCommand {
+public interface DBCommand extends Command {
 }
