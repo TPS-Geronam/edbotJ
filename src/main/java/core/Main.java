@@ -45,6 +45,8 @@ public class Main {
         comVicari.AddVicari();
         comProcuratores.AddProcuratores();
 
+        Secrets.initProperties();
+
         builder.build();
     }
 
